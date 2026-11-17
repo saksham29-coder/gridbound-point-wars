@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gridbound: Point Wars</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><div><h1>GRIDBOUND <span>POINT WARS</span></h1><p>Every point is a decision.</p></div><div id="connection" class="pill">Connecting…</div></header>
+  <main>
+    <section id="lobby" class="panel">
+      <h2>Enter the arena</h2>
+      <label>Your player name<input id="playerName" maxlength="18" placeholder="e.g. Saksham" value="Player"></label>
+      <label>Difficulty<select id="difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+      <div class="actions"><button id="createBtn">Create game</button></div>
+      <div class="join"><label>Room code<input id="roomCode" maxlength="6" placeholder="ABC123"></label><button id="joinBtn" class="secondary">Join game</button></div>
+      <p class="hint">A room starts automatically when four players have joined.</p>
+      <p id="lobbyError" class="error"></p>
+    </section>
+
+    <section id="game" class="hidden">
+      <div class="topbar panel">
+        <div><small>ROOM</small><strong id="roomLabel">------</strong></div>
+        <div><small>TIME LEFT</small><strong id="timer">15:00</strong></div>
+        <div><small>STATUS</small><strong id="gameStatus">Waiting</strong></div>
+      </div>
+      <div class="layout">
+        <section class="panel board-panel">
+          <div class="board-heading"><h2>Arena</h2><span>Destination: ◆</span></div>
+          <div id="board" class="board"></div>
+          <div class="legend"><span>◆ Destination</span><span>■ Obstacle</span><span>● Player</span></div>
+          <p id="gameMessage" class="hint"></p>
+        </section>
+        <aside class="panel sidebar">
+          <h2>Players</h2><div id="players"></div>
+          <hr>
+          <h2>Controls</h2>
+          <div class="controls">
+            <button data-move="0,-1">↑</button>
+            <div><button data-move="-1,0">←</button><button data-move="0,1">↓</button><button data-move="1,0">→</button></div>
+          </div>
+          <label>Movement mode<select id="moveMode"><option value="walk">Walk · 1 point / cell</option><option value="sprint">Sprint · 2 points / cell</option></select></label>
+          <p class="hint">Use arrow keys or WASD. Hold a direction to move continuously.</p>
+          <hr>
+          <h2>Interact</h2>
+          <label>Nearby player<select id="targetPlayer"><option value="">Select player</option></select></label>
+          <label>Points<input id="amount" type="number" min="1" value="10"></label>
+          <div class="actions vertical">
+            <button id="shareBtn" class="secondary">Request point transfer</button>
+            <button id="attackBtn" class="danger">Offer attack</button>
+          </div>
+          <p class="hint">Sharing requires the same cell. Attacking requires an adjacent cell.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <div id="modal" class="modal hidden"><div class="modal-card"><h2 id="modalTitle">Request</h2><p id="modalText"></p><div class="actions"><button id="acceptBtn">Accept</button><button id="declineBtn" class="secondary">Decline</button></div></div></div>
+  <div id="toast" class="toast"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
